@@ -7,7 +7,9 @@ services:
       POSTGRES_USER: ${DB_USER:-user_admin}
       POSTGRES_PASSWORD: ${DB_PASS:-user_pass}
     ports:
-      - "5432:5432"
+      - "${USER_DB_PORT}:5432"
+    networks:
+      - mediahub-network
 
   media_db:
     image: postgres:15-alpine
@@ -17,7 +19,9 @@ services:
       POSTGRES_USER: ${DB_USER:-media_admin}
       POSTGRES_PASSWORD: ${DB_PASS:-media_pass}
     ports:
-      - "5432:5432"
+      - "${MEDIA_DB_PORT}:5432"
+    networks:
+      - mediahub-network
 
   subscription_db:
     image: postgres:15-alpine
@@ -27,8 +31,9 @@ services:
       POSTGRES_USER: ${DB_USER:-subscription_admin}
       POSTGRES_PASSWORD: ${DB_PASS:-subscription_pass}
     ports:
-      - "5432:5432"
-
+      - "${SUB_DB_PORT}:5432"
+    networks:
+      - mediahub-network
 
   pgadmin:
     image: dpage/pgadmin4
@@ -38,3 +43,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"
+    networks:
+      - mediahub-network
+
+networks:
+  mediahub-network:
+    driver: bridge
