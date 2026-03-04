@@ -1,0 +1,40 @@
+services:
+  user_db:
+    image: postgres:15-alpine
+    container_name: user_db
+    environment:
+      POSTGRES_DB: mediahub_user
+      POSTGRES_USER: ${DB_USER:-user_admin}
+      POSTGRES_PASSWORD: ${DB_PASS:-user_pass}
+    ports:
+      - "5432:5432"
+
+  media_db:
+    image: postgres:15-alpine
+    container_name: media_db
+    environment:
+      POSTGRES_DB: mediahub_media
+      POSTGRES_USER: ${DB_USER:-media_admin}
+      POSTGRES_PASSWORD: ${DB_PASS:-media_pass}
+    ports:
+      - "5432:5432"
+
+  subscription_db:
+    image: postgres:15-alpine
+    container_name: subscription_db
+    environment:
+      POSTGRES_DB: mediahub_subscription
+      POSTGRES_USER: ${DB_USER:-subscription_admin}
+      POSTGRES_PASSWORD: ${DB_PASS:-subscription_pass}
+    ports:
+      - "5432:5432"
+
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_container
+    environment:
+      PGADMIN_DEFAULT_EMAIL: email@mediahub.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
